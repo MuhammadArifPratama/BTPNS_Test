@@ -13,7 +13,14 @@ import (
 	"btpntest/middleware/databases"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
+
+func init() {
+	if err := godotenv.Load("conf/conf.env"); err != nil {
+		log.Printf("Warning: Could not load conf/conf.env: %v\n", err)
+	}
+}
 
 func loadDatabaseConfig() databases.Config {
 	dbType := os.Getenv("DB_TYPE")
@@ -110,6 +117,11 @@ func main() {
 		cicilanHandler := http.NewCicilanHandler(cicilanUsecase)
 
 		router := gin.Default()
+
+		router.POST("/btpn/*path", func(c *gin.Context) {
+			c.Request.URL.Path = c.Param("path")
+			cicilanHandler.CalculateInstallments(c)
+		})
 
 		cicilanHandler.RegisterRoutes(router)
 
