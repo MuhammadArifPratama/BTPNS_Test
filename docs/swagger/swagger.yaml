@@ -1,0 +1,98 @@
+definitions:
+  domain.CalculateInstallmentRequest:
+    properties:
+      amount:
+        type: integer
+    required:
+    - amount
+    type: object
+  domain.CalculateInstallmentResponse:
+    properties:
+      calculations:
+        items:
+          $ref: '#/definitions/domain.InstallmentCalculation'
+        type: array
+    type: object
+  domain.InstallmentCalculation:
+    properties:
+      monthly_installment:
+        type: integer
+      tenor:
+        type: integer
+      total_margin:
+        type: integer
+      total_payment:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /btpn/calculate-installments:
+    post:
+      consumes:
+      - application/json
+      description: Returns installment calculations for available tenors.
+      parameters:
+      - description: Installment request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CalculateInstallmentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.CalculateInstallmentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Calculate installment schedule
+      tags:
+      - Installments
+  /calculate-installments:
+    post:
+      consumes:
+      - application/json
+      description: Returns installment calculations for available tenors.
+      parameters:
+      - description: Installment request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CalculateInstallmentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.CalculateInstallmentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Calculate installment schedule
+      tags:
+      - Installments
+swagger: "2.0"

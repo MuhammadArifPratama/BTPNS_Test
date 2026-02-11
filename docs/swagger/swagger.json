@@ -1,0 +1,153 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/btpn/calculate-installments": {
+            "post": {
+                "description": "Returns installment calculations for available tenors.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Installments"
+                ],
+                "summary": "Calculate installment schedule",
+                "parameters": [
+                    {
+                        "description": "Installment request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CalculateInstallmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.CalculateInstallmentResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/calculate-installments": {
+            "post": {
+                "description": "Returns installment calculations for available tenors.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Installments"
+                ],
+                "summary": "Calculate installment schedule",
+                "parameters": [
+                    {
+                        "description": "Installment request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.CalculateInstallmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.CalculateInstallmentResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.CalculateInstallmentRequest": {
+            "type": "object",
+            "required": [
+                "amount"
+            ],
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "domain.CalculateInstallmentResponse": {
+            "type": "object",
+            "properties": {
+                "calculations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.InstallmentCalculation"
+                    }
+                }
+            }
+        },
+        "domain.InstallmentCalculation": {
+            "type": "object",
+            "properties": {
+                "monthly_installment": {
+                    "type": "integer"
+                },
+                "tenor": {
+                    "type": "integer"
+                },
+                "total_margin": {
+                    "type": "integer"
+                },
+                "total_payment": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

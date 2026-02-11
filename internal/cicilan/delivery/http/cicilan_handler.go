@@ -18,6 +18,18 @@ func NewCicilanHandler(usecaseImpl cicilan.CicilanUsecase) *CicilanHandler {
 	return &CicilanHandler{usecase: usecaseImpl}
 }
 
+// CalculateInstallments godoc
+// @Summary Calculate installment schedule
+// @Description Returns installment calculations for available tenors.
+// @Tags Installments
+// @Accept json
+// @Produce json
+// @Param request body domain.CalculateInstallmentRequest true "Installment request"
+// @Success 200 {object} domain.CalculateInstallmentResponse
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /calculate-installments [post]
+// @Router /btpn/calculate-installments [post]
 func (h *CicilanHandler) CalculateInstallments(c *gin.Context) {
 	var req domain.CalculateInstallmentRequest
 
